@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой кабинет</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1, h2 { color: #333; }
+        ul { list-style: none; padding-left: 0; }
+        li { margin-bottom: 15px; }
+        .section { margin-top: 30px; }
+        .booking { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Привет, {{ current_user.email }}!</h1>
+
+    <div class="section">
+        <h2>Текущие бронирования:</h2>
+        {% if current %}
+            <ul>
+            {% for b in current %}
+                <li class="booking">
+                    <strong>Ячейка:</strong> {{ b.locker.number }}<br>
+                    <strong>С:</strong> {{ b.start_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>По:</strong> {{ b.end_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>Статус оплаты:</strong> {{ 'оплачено' if b.is_paid else 'не оплачено' }}
+                    <form method="POST" action="{{ url_for('cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Вы уверены, что хотите отменить бронирование?');">
+                        <button type="submit">Отменить</button>
+                    </form>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет активных (текущих) бронирований.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Будущие бронирования:</h2>
+        {% if future %}
+            <ul>
+            {% for b in future %}
+                <li class="booking">
+                    <strong>Ячейка:</strong> {{ b.locker.number }}<br>
+                    <strong>С:</strong> {{ b.start_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>По:</strong> {{ b.end_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>Статус оплаты:</strong> {{ 'оплачено' if b.is_paid else 'не оплачено' }}
+                    <form method="POST" action="{{ url_for('cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Вы уверены, что хотите отменить бронирование?');">
+                        <button type="submit">Отменить</button>
+                    </form>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет будущих бронирований.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Прошлые бронирования:</h2>
+        {% if past %}
+            <ul>
+            {% for b in past %}
+                <li class="booking">
+                    <strong>Ячейка:</strong> {{ b.locker.number }}<br>
+                    <strong>С:</strong> {{ b.start_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>По:</strong> {{ b.end_time.strftime('%d.%m.%Y %H:%M') }}<br>
+                    <strong>Статус оплаты:</strong> {{ 'оплачено' if b.is_paid else 'не оплачено' }}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет завершённых бронирований.</p>
+        {% endif %}
+    </div>
+
+    <p><a href="{{ url_for('book') }}">Забронировать новую ячейку</a></p>
+</body>
+</html>
+

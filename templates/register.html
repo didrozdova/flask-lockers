@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка формы</title>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>{{ form.email.label }}: {{ form.email() }}</p>
+        <p>{{ form.password.label }}: {{ form.password() }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</body>
+</html>
+
+

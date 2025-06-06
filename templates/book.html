@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Забронировать ячейку</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, select { padding: 5px; width: 250px; font-size: 14px; }
+        button { margin-top: 20px; padding: 8px 15px; font-size: 14px; }
+        .back { margin-top: 30px; display: inline-block; }
+        .flash { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Забронировать ячейку</h1>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <label for="locker">Выберите ячейку:</label>
+        {{ form.locker }}
+
+        <label for="start_time">Начало:</label>
+        {{ form.start_time(type="datetime-local") }}
+
+        <label for="end_time">Окончание:</label>
+        {{ form.end_time(type="datetime-local") }}
+
+        <button type="submit">Забронировать</button>
+    </form>
+
+    <p class="back"><a href="{{ url_for('profile') }}">← Назад в профиль</a></p>
+
+</body>
+</html>
+
